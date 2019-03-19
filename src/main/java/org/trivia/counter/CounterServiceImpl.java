@@ -79,6 +79,7 @@ public class CounterServiceImpl implements CounterService, InitializingBean {
             BufferedReader br = new BufferedReader(reader); // 建立一个对象，它把文件内容转成计算机能读懂的语言
             String line;
             line = br.readLine();
+            log.info("Load from file {}", line);
             if(!StringUtils.isEmpty(line)) {
                 try {
                     init = Integer.parseInt(line,16);
