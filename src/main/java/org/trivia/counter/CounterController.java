@@ -3,10 +3,7 @@ package org.trivia.counter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -15,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
+@CrossOrigin
 @RestController("counterController")
 public class CounterController {
     @Autowired
@@ -23,7 +20,7 @@ public class CounterController {
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
-    @GetMapping
+    @GetMapping("/counter")
     public Result<Integer> get() {
         return Result.<Integer>builder()
                 .data(counterService.get())
@@ -31,7 +28,7 @@ public class CounterController {
                 .status("200")
                 .build();
     }
-    @PostMapping
+    @PostMapping("/counter")
     public Result<Integer> incrementAndGet() {
         return Result.<Integer>builder()
                 .data(counterService.incrementAndGet())
@@ -39,7 +36,7 @@ public class CounterController {
                 .status("200")
                 .build();
     }
-    @PostMapping("uploadFiles")
+    @PostMapping("/uploadFiles")
     public Result<Integer> uploadFiles(@RequestParam(value = "file") List<MultipartFile> files) {
         if(files == null || files.isEmpty()) {
             return Result.<Integer>builder().error("Cannot post empty request")
